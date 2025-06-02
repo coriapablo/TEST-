@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test de Tipo de Inversionista</title>
+  <style>
+    :root {
+      --color-primario: #43a047;
+      --color-secundario: #e8f5e9;
+      --color-texto: #2e7d32;
+      --color-fondo: #f1f8e9;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--color-fondo);
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: var(--color-primario);
+      margin-bottom: 30px;
+      animation: fadeIn 1s ease-in-out;
+    }
+    .question {
+      background: white;
+      border-left: 5px solid var(--color-primario);
+      padding: 15px;
+      margin: 15px auto;
+      max-width: 600px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      animation: slideUp 0.6s ease-in-out;
+    }
+    .question p {
+      margin-top: 0;
+      font-weight: bold;
+      color: var(--color-texto);
+    }
+    label {
+      display: block;
+      margin: 8px 0;
+      cursor: pointer;
+    }
+    button {
+      display: block;
+      margin: 30px auto;
+      background-color: var(--color-primario);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #2e7d32;
+    }
+    .result {
+      display: none;
+      margin: 40px auto;
+      max-width: 600px;
+      background-color: var(--color-secundario);
+      border-left: 5px solid var(--color-primario);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      animation: fadeIn 1s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Descubre tu Perfil de Inversionista</h1>
+  <form id="quizForm">
+    <div class="question">
+      <p>1. ¿Qué harías si tus inversiones bajan un 20% en tres meses?</p>
+      <label><input type="radio" name="q1" value="1"> A) Retiro todo para evitar más pérdidas.</label>
+      <label><input type="radio" name="q1" value="2"> B) Espero sin hacer nada.</label>
+      <label><input type="radio" name="q1" value="3"> C) Invierto más, es una oportunidad.</label>
+    </div>
+    <div class="question">
+      <p>2. ¿Cuál es tu objetivo principal al invertir?</p>
+      <label><input type="radio" name="q2" value="1"> A) Mantener mi dinero seguro.</label>
+      <label><input type="radio" name="q2" value="2"> B) Obtener rendimientos estables.</label>
+      <label><input type="radio" name="q2" value="3"> C) Multiplicar mi capital.</label>
+    </div>
+    <div class="question">
+      <p>3. ¿Qué tanto conoces sobre inversiones?</p>
+      <label><input type="radio" name="q3" value="1"> A) Muy poco o nada.</label>
+      <label><input type="radio" name="q3" value="2"> B) Algo, estoy aprendiendo.</label>
+      <label><input type="radio" name="q3" value="3"> C) Bastante, tengo experiencia.</label>
+    </div>
+    <div class="question">
+      <p>4. ¿Por cuánto tiempo podrías dejar tu dinero invertido?</p>
+      <label><input type="radio" name="q4" value="1"> A) Menos de 1 año.</label>
+      <label><input type="radio" name="q4" value="2"> B) De 1 a 3 años.</label>
+      <label><input type="radio" name="q4" value="3"> C) Más de 3 años.</label>
+    </div>
+    <div class="question">
+      <p>5. ¿Qué tan cómodo te sientes con el riesgo financiero?</p>
+      <label><input type="radio" name="q5" value="1"> A) Nada cómodo. Prefiero evitarlo.</label>
+      <label><input type="radio" name="q5" value="2"> B) Depende del beneficio.</label>
+      <label><input type="radio" name="q5" value="3"> C) Muy cómodo. El riesgo es parte del juego.</label>
+    </div>
+    <button type="button" onclick="calculateResult()">Ver mi resultado</button>
+  </form>
+  <div class="result" id="resultBox"></div>
+  <script>
+    function calculateResult() {
+      let total = 0;
+      for (let i = 1; i <= 5; i++) {
+        const selected = document.querySelector(`input[name='q${i}']:checked`);
+        if (!selected) {
+          alert('Responde todas las preguntas antes de continuar.');
+          return;
+        }
+        total += parseInt(selected.value);
+      }
+      let resultText = '';
+      if (total <= 7) {
+        resultText = '<h2>Resultado: Inversionista Conservador</h2><p>Prefieres seguridad, proteges tu capital y buscas inversiones estables como depósitos a plazo o fondos de bajo riesgo.</p>';
+      } else if (total <= 11) {
+        resultText = '<h2>Resultado: Inversionista Moderado</h2><p>Equilibras seguridad y crecimiento. Aceptas cierto riesgo a cambio de mejores rendimientos y usas una estrategia diversificada.</p>';
+      } else {
+        resultText = '<h2>Resultado: Inversionista Agresivo</h2><p>Persigues alta rentabilidad, toleras la volatilidad y sueles invertir a largo plazo en instrumentos como acciones, criptomonedas o startups.</p>';
+      }
+      const resultBox = document.getElementById('resultBox');
+      resultBox.innerHTML = resultText;
+      resultBox.style.display = 'block';
+      resultBox.scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
